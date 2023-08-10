@@ -138,6 +138,41 @@ describe('DID tests', () => {
     }
   });
 
+  describe('TestDID_NboID_Types', () => {
+    const testCases = [
+      {
+        title: 'Nbo | Besu chain, Main',
+        method: DidMethod.Nbo,
+        chain: Blockchain.Besu,
+        net: NetworkId.Main,
+        wantDID: 'did:nbo:besu:main:4bb86obLkMrifHixMY62WM4iQQVr7u29cxWjMAinrT'
+      },
+      {
+        title: 'Nbo | Besu chain, Test',
+        method: DidMethod.Nbo,
+        chain: Blockchain.Besu,
+        net: NetworkId.Test,
+        wantDID: 'did:nbo:besu:test:4bnk9z7TgAgM91v8zcBfAmD5LXbZLieknX72P8wvfH'
+      }
+    ];
+
+    for (let i = 0; i < testCases.length; i++) {
+      const tc = testCases[i];
+      it(tc.title, () => {
+        const did = helperBuildDIDFromType(tc.method, tc.chain, tc.net);
+        expect(tc.method).toEqual(did.method);
+        const id = DID.idFromDID(did);
+        const method = DID.methodFromId(id);
+        expect(tc.method).toEqual(method);
+        const blockchain = DID.blockchainFromId(id);
+        expect(tc.chain).toEqual(blockchain);
+        const networkID = DID.networkIdFromId(id);
+        expect(tc.net).toEqual(networkID);
+        expect(tc.wantDID).toEqual(did.string());
+      });
+    }
+  });
+
   it('TestDID_PolygonID_DID.parseFromId', () => {
     const id1 = Id.fromString('2qCU58EJgrEM9NKvHkvg5NFWUiJPgN3M3LnCr98j3x');
 

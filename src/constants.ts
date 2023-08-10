@@ -45,6 +45,7 @@ export const Constants = Object.freeze({
 export enum Blockchain {
   Ethereum = 'eth',
   Polygon = 'polygon',
+  Besu = 'besu',
   Unknown = 'unknown',
   NoChain = '',
   ReadOnly = 'readonly'
@@ -52,6 +53,7 @@ export enum Blockchain {
 
 export enum NetworkId {
   Main = 'main',
+  Test = 'test',
   Mumbai = 'mumbai',
   Goerli = 'goerli',
   Unknown = 'unknown',
@@ -61,12 +63,14 @@ export enum NetworkId {
 export enum DidMethod {
   Iden3 = 'iden3',
   PolygonId = 'polygonid',
+  Nbo = 'nbo',
   Other = ''
 }
 
 export const DidMethodByte: { [key: string]: number } = Object.freeze({
   [DidMethod.Iden3]: 0b00000001,
   [DidMethod.PolygonId]: 0b00000010,
+  [DidMethod.Nbo]: 0b00000100,
   [DidMethod.Other]: 0b11111111
 });
 
@@ -88,6 +92,11 @@ export const DidMethodNetwork: {
     [`${Blockchain.Ethereum}:${NetworkId.Main}`]: 0b00100000 | 0b00000001,
     [`${Blockchain.Ethereum}:${NetworkId.Goerli}`]: 0b00100000 | 0b00000010
   },
+  [DidMethod.Nbo]: {
+    [`${Blockchain.NoChain}:${NetworkId.NoNetwork}`]: 0b00000000,
+    [`${Blockchain.Besu}:${NetworkId.Main}`]: 0b00010000 | 0b00000001,
+    [`${Blockchain.Besu}:${NetworkId.Test}`]: 0b00010000 | 0b00000010,
+   },
   [DidMethod.Other]: {
     [`${Blockchain.Unknown}:${NetworkId.Unknown}`]: 0b11111111
   }
