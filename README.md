@@ -16,3 +16,5 @@ All code here is experimental and WIP
 
 js-iden3-core is part of the iden3 project copyright 2018 0kims association
 and published with GPL-3 license, please check the LICENSE file for more details.
+
+##NBO
